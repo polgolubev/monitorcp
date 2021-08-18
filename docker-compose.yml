@@ -1,0 +1,20 @@
+version: '3'
+services:
+  monitorcp:
+    image: polgolubev/monitorcp
+    volumes: 
+      - ${PWD}/database:/opt/monitorcp/database
+      - static:/opt/monitorcp/static
+    restart: always
+  nginx:
+    image: polgolubev/nginx
+    ports: 
+      - 80:80
+    volumes: 
+      - static:/opt/monitorcp/static
+      - ./logs:/var/log/nginx
+    depends_on: 
+      - monitorcp
+    restart: always 
+volumes: 
+  static:
